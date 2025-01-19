@@ -22,6 +22,11 @@ public class MainRestController {
     @GetMapping("get/user/details")
     public ResponseEntity<UserDetail> getUserDetails(@RequestHeader String username)
     {
+        if(!userDetailRepository.existsById(username))
+        {
+            return ResponseEntity.notFound().build();
+        }
+
         UserDetail userDetail = userDetailRepository.findById(username).get();
         return ResponseEntity.ok(userDetail);
     }
